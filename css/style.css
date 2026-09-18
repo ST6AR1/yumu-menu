@@ -133,17 +133,12 @@ body {
   user-select: none;
   object-fit: cover;
   pointer-events: none;
+  transform-origin: center center;
+  transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.3, 1);
+  will-change: transform;
 }
-
-.tap-zone {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  z-index: 1000;
-}
-.tap-zone.left { left: 0; }
-.tap-zone.right { right: 0; }
+.page img.zoomed { cursor: grab; }
+.page img.panning { transition: none; cursor: grabbing; }
 
 .nav-btn {
   position: absolute;
@@ -167,6 +162,13 @@ body {
 .nav-prev { left: 8px; }
 .nav-next { right: 8px; }
 .nav-btn:disabled { opacity: 0.2; pointer-events: none; }
+
+body.zoom-active .nav-btn,
+body.zoom-active .topbar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
 
 .hint {
   flex: 0 0 auto;
