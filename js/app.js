@@ -77,17 +77,23 @@
 
   render(0, false);
 
-  // reveal once the first page image is ready (fast: we only wait on one image)
-  const firstImg = pageEls[0].querySelector('img');
+  // reveal once the intro video finishes playing, fading slowly into the book
+  const introVideo = document.getElementById('introVideo');
+  let revealed = false;
   function reveal() {
+    if (revealed) return;
+    revealed = true;
     loadingEl.classList.add('hide');
-    setTimeout(() => loadingEl.remove(), 500);
+    setTimeout(() => loadingEl.remove(), 1200);
     setTimeout(() => swipeHint.classList.add('fade'), 3500);
   }
-  if (firstImg.complete) reveal();
-  else {
-    firstImg.addEventListener('load', reveal, { once: true });
-    firstImg.addEventListener('error', reveal, { once: true });
+  if (introVideo) {
+    introVideo.addEventListener('ended', reveal);
+    introVideo.addEventListener('error', reveal);
+    // Safety net: if autoplay is blocked or the video stalls, never strand visitors.
+    setTimeout(reveal, 7000);
+  } else {
+    reveal();
   }
 
   // ---------- controls ----------
