@@ -48,23 +48,10 @@ body {
   transition: opacity 0.5s ease;
 }
 .loading.hide { opacity: 0; pointer-events: none; }
-.loading-mark {
-  font-size: 26px;
-  letter-spacing: 0.5em;
-  text-indent: 0.5em;
-  color: var(--ink);
-  font-weight: 500;
-}
-.loading-spinner {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--line);
-  border-top-color: var(--ink-soft);
-  animation: spin 0.9s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.loading-logo {
+  width: 96px;
+  height: auto;
+  opacity: 0.92;
 }
 
 /* ---------- topbar ---------- */
