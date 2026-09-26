@@ -9,7 +9,7 @@
   --toc-title: #55694a;
   --toc-title-active: #3d5033;
   --shadow: rgba(44, 40, 34, 0.2);
-  --book-w: min(88vw, 480px, calc((100dvh - var(--safe-top) - var(--safe-bottom) - 130px) * 0.5625));
+  --book-w: min(88vw, 480px, calc((100dvh - var(--safe-top) - var(--safe-bottom) - 104px) * 0.5625));
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -73,8 +73,10 @@ body {
 
 /* ---------- topbar ---------- */
 .topbar {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(100% + 8px);
   height: 38px;
-  margin-bottom: 12px;
   pointer-events: none;
   display: flex;
   align-items: center;
@@ -100,6 +102,8 @@ body {
 .icon-btn:active { transform: scale(0.92); }
 
 .page-indicator {
+  align-self: flex-end;
+  padding-bottom: 4px;
   font-size: 12px;
   color: var(--ink-soft);
   letter-spacing: 0.06em;
@@ -168,7 +172,7 @@ body.zoom-active .book:active { cursor: grabbing; }
 
 .nav-btn {
   position: absolute;
-  top: calc(50px + var(--book-w) * 0.4444);
+  top: 50%;
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
