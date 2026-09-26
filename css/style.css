@@ -146,12 +146,13 @@ body {
   user-select: none;
   object-fit: cover;
   pointer-events: none;
-  transform-origin: center center;
+  transform-origin: 0 0;
   transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.3, 1);
   will-change: transform;
 }
-.page img.zoomed { cursor: grab; }
-.page img.panning { transition: none; cursor: grabbing; }
+.page img.panning { transition: none; }
+body.zoom-active .book { cursor: grab; }
+body.zoom-active .book:active { cursor: grabbing; }
 
 .nav-btn {
   position: absolute;
