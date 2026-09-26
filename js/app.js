@@ -21,14 +21,16 @@
   const DOUBLE_TAP_SCALE = 2.5;
   const SNAP_BACK_BELOW = 1.08;
   const TAP_MOVE_TOLERANCE = 10;
-  const SWIPE_THRESHOLD = 45;
+  const SWIPE_DISTANCE = 32;
+  const FLICK_DISTANCE = 16;
+  const FLICK_SPEED = 0.3;
   const DOUBLE_TAP_MS = 260;
   const HINT_DEFAULT = swipeHint.textContent;
   let scale = 1, tx = 0, ty = 0;
   let zoomed = false;
   const pointers = new Map();
   let gesture = null;
-  let downX = 0, downY = 0, moved = false;
+  let downX = 0, downY = 0, downTime = 0, moved = false, swipeFired = false;
   let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
   let pendingTap = null;
   let wheelTimer = null;
@@ -168,6 +170,13 @@
     setZoomed(false);
   }
 
+  function fireSwipe(dx) {
+    swipeFired = true;
+    swipeHint.classList.add('fade');
+    if (pendingTap) { clearTimeout(pendingTap); pendingTap = null; }
+    if (dx < 0) goNext(); else goPrev();
+  }
+
   function startPinch() {
     if (pendingTap) { clearTimeout(pendingTap); pendingTap = null; }
     const [a, b] = [...pointers.values()];
@@ -189,7 +198,7 @@
     bookEl.setPointerCapture(e.pointerId);
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.size === 1) {
-      downX = e.clientX; downY = e.clientY; moved = false;
+      downX = e.clientX; downY = e.clientY; downTime = Date.now(); moved = false; swipeFired = false;
       gesture = { type: 'pan', startTx: tx, startTy: ty, ox: e.clientX, oy: e.clientY };
     } else if (pointers.size === 2) {
       startPinch();
@@ -215,6 +224,10 @@
       setZoomed(scale > 1.001);
     } else if (gesture.type === 'pan' && pointers.size === 1) {
       if (Math.abs(e.clientX - downX) > TAP_MOVE_TOLERANCE || Math.abs(e.clientY - downY) > TAP_MOVE_TOLERANCE) moved = true;
+      if (!zoomed && moved && !swipeFired) {
+        const dx = e.clientX - downX, dy = e.clientY - downY;
+        if (Math.abs(dx) > SWIPE_DISTANCE && Math.abs(dx) > Math.abs(dy) * 1.2) fireSwipe(dx);
+      }
       if (zoomed && moved) {
         setPanning(true);
         tx = gesture.startTx + (e.clientX - gesture.ox);
@@ -247,11 +260,8 @@
 
     if (moved) {
       const dx = e.clientX - downX, dy = e.clientY - downY;
-      if (!zoomed && Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
-        swipeHint.classList.add('fade');
-        if (pendingTap) { clearTimeout(pendingTap); pendingTap = null; }
-        if (dx < 0) goNext(); else goPrev();
-      }
+      const speed = Math.abs(dx) / Math.max(1, Date.now() - downTime);
+      if (!zoomed && !swipeFired && Math.abs(dx) > FLICK_DISTANCE && Math.abs(dx) > Math.abs(dy) && speed > FLICK_SPEED) fireSwipe(dx);
       return;
     }
 
