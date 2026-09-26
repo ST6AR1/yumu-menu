@@ -50,6 +50,22 @@ body {
   height: 100%;
   object-fit: cover;
 }
+.loading-skip {
+  position: absolute;
+  right: 20px;
+  bottom: calc(24px + var(--safe-bottom));
+  padding: 8px 16px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #fff;
+  background: rgba(20, 18, 14, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  opacity: 0.9;
+}
+.loading-skip:active { opacity: 0.6; }
 
 /* ---------- topbar ---------- */
 .topbar {

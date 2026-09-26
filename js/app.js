@@ -83,6 +83,7 @@
   function reveal() {
     if (revealed) return;
     revealed = true;
+    if (introVideo) introVideo.pause();
     loadingEl.classList.add('hide');
     setTimeout(() => loadingEl.remove(), 1200);
     setTimeout(() => swipeHint.classList.add('fade'), 3500);
@@ -90,6 +91,7 @@
   if (introVideo) {
     introVideo.addEventListener('ended', reveal);
     introVideo.addEventListener('error', reveal);
+    loadingEl.addEventListener('click', reveal);
     // Safety net: if autoplay is blocked or the video stalls, never strand visitors.
     setTimeout(reveal, 7000);
   } else {
