@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#f4ece1">
 <title>芸莯 線上手冊</title>
@@ -17,21 +17,23 @@
 
 
 <main class="stage">
-  <header class="topbar">
-    <button id="tocBtn" class="icon-btn" aria-label="目錄">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="4" cy="6" r="0.9" fill="currentColor"/><circle cx="4" cy="12" r="0.9" fill="currentColor"/><circle cx="4" cy="18" r="0.9" fill="currentColor"/><line x1="9" y1="6" x2="20.5" y2="6"/><line x1="9" y1="12" x2="20.5" y2="12"/><line x1="9" y1="18" x2="20.5" y2="18"/></svg>
-    </button>
-    <div class="page-indicator" id="pageIndicator">1 / 1</div>
-  </header>
+  <div class="book-col">
+    <header class="topbar">
+        <button id="tocBtn" class="icon-btn" aria-label="目錄">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="4" cy="6" r="0.9" fill="currentColor"/><circle cx="4" cy="12" r="0.9" fill="currentColor"/><circle cx="4" cy="18" r="0.9" fill="currentColor"/><line x1="9" y1="6" x2="20.5" y2="6"/><line x1="9" y1="12" x2="20.5" y2="12"/><line x1="9" y1="18" x2="20.5" y2="18"/></svg>
+        </button>
+        <div class="page-indicator" id="pageIndicator">1 / 1</div>
+      </header>
 
-  <div id="book" class="book"></div>
+    <div id="book" class="book"></div>
 
-  <button id="prevBtn" class="nav-btn nav-prev" aria-label="上一頁">
-    <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M15.5 4.5 8 12l7.5 7.5 1.4-1.4L10.8 12l6.1-6.1z"/></svg>
-  </button>
-  <button id="nextBtn" class="nav-btn nav-next" aria-label="下一頁">
-    <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="m8.5 4.5-1.4 1.4L13.2 12l-6.1 6.1 1.4 1.4L16 12z"/></svg>
-  </button>
+    <button id="prevBtn" class="nav-btn nav-prev" aria-label="上一頁">
+        <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M15.5 4.5 8 12l7.5 7.5 1.4-1.4L10.8 12l6.1-6.1z"/></svg>
+      </button>
+      <button id="nextBtn" class="nav-btn nav-next" aria-label="下一頁">
+        <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="m8.5 4.5-1.4 1.4L13.2 12l-6.1 6.1 1.4 1.4L16 12z"/></svg>
+      </button>
+  </div>
 </main>
 
 <div class="hint" id="swipeHint">左右滑動或點兩側翻頁</div>
