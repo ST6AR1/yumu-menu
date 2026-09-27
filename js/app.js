@@ -98,7 +98,16 @@
     introVideo.addEventListener('ended', reveal);
     introVideo.addEventListener('error', reveal);
     loadingEl.addEventListener('click', reveal);
-    // Safety net: if autoplay is blocked or the video stalls, never strand visitors.
+    // Some hosts don't serve the video with byte-range support, which makes
+    // mobile Safari refuse to autoplay it (it just sits there paused with a
+    // native play button showing). Ask it to play explicitly, and if that
+    // gets rejected, skip the intro right away instead of stranding visitors
+    // on a broken-looking paused frame.
+    const playPromise = introVideo.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(reveal);
+    }
+    // Safety net: if the video stalls without ever firing an event, never strand visitors.
     setTimeout(reveal, 7000);
   } else {
     reveal();
