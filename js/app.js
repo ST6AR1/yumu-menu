@@ -1,7 +1,6 @@
 (function () {
   const total = BOOK_PAGES.length;
 
-  const loadingEl = document.getElementById('loading');
   const bookEl = document.getElementById('book');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
@@ -82,36 +81,7 @@
   }
 
   render(0, false);
-
-  // reveal once the intro video finishes playing, fading slowly into the book
-  const introVideo = document.getElementById('introVideo');
-  let revealed = false;
-  function reveal() {
-    if (revealed) return;
-    revealed = true;
-    if (introVideo) introVideo.pause();
-    loadingEl.classList.add('hide');
-    setTimeout(() => loadingEl.remove(), 1200);
-    setTimeout(() => swipeHint.classList.add('fade'), 3500);
-  }
-  if (introVideo) {
-    introVideo.addEventListener('ended', reveal);
-    introVideo.addEventListener('error', reveal);
-    loadingEl.addEventListener('click', reveal);
-    // Some hosts don't serve the video with byte-range support, which makes
-    // mobile Safari refuse to autoplay it (it just sits there paused with a
-    // native play button showing). Ask it to play explicitly, and if that
-    // gets rejected, skip the intro right away instead of stranding visitors
-    // on a broken-looking paused frame.
-    const playPromise = introVideo.play();
-    if (playPromise && typeof playPromise.catch === 'function') {
-      playPromise.catch(reveal);
-    }
-    // Safety net: if the video stalls without ever firing an event, never strand visitors.
-    setTimeout(reveal, 7000);
-  } else {
-    reveal();
-  }
+  setTimeout(() => swipeHint.classList.add('fade'), 3500);
 
   // ---------- controls ----------
   prevBtn.addEventListener('click', () => { swipeHint.classList.add('fade'); goPrev(); });
